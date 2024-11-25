@@ -33,5 +33,25 @@ pipeline {
         echo "Deploying to staging..."
       }
     }
+    stage ('Confirm Deploy to Production') {
+      steps {
+        timeout (time: 60, unit: 'SECONDS') {
+          input (message: 'Okay to Deploy?', ok: 'Let\'s Do it!')
+        }
+      }
+    }
+    stage ('Deploy to roduction') {
+      steps {
+        echo "Deploying to production..."
+      }
+    }
+  }
+  post {
+    success {
+      echo "build succeeded"
+    }
+    failure {
+      echo "Build failed"
+    }
   }
 }
